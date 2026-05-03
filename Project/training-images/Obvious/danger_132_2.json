@@ -1,0 +1,10 @@
+{
+  "image_id": 463849,
+  "original_file": "000000463849.jpg",
+  "label": 2,
+  "label_name": "Obvious",
+  "distance": 28.154586216103397,
+  "num_objects": 25,
+  "source": "person_vehicle_close",
+  "danger_level": "OBVIOUS"
+}

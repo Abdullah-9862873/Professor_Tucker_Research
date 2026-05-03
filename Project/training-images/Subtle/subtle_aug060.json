@@ -1,0 +1,9 @@
+{
+  "image_id": 122606,
+  "original_file": "train_009_1.jpg",
+  "label": 1,
+  "label_name": "Subtle",
+  "max_proximity": 0.32367510683761513,
+  "num_objects": 2,
+  "augmented": true
+}

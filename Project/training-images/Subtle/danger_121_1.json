@@ -1,0 +1,10 @@
+{
+  "image_id": 341469,
+  "original_file": "000000341469.jpg",
+  "label": 1,
+  "label_name": "Subtle",
+  "distance": 124.85322112384605,
+  "num_objects": 13,
+  "source": "person_vehicle_close",
+  "danger_level": "SUBTLE"
+}

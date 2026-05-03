@@ -1,0 +1,9 @@
+{
+  "image_id": 322610,
+  "original_file": "000000322610.jpg",
+  "label": 1,
+  "label_name": "Subtle",
+  "danger_score": 130.0,
+  "num_objects": 23,
+  "source": "danger_candidates"
+}

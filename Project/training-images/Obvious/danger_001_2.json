@@ -1,0 +1,9 @@
+{
+  "image_id": 254814,
+  "original_file": "000000254814.jpg",
+  "label": 2,
+  "label_name": "Obvious",
+  "danger_score": 370.0,
+  "num_objects": 43,
+  "source": "danger_candidates"
+}

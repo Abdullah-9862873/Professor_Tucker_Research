@@ -1,0 +1,53 @@
+# Streamlit Application Configuration
+
+theme:
+  primaryColor: "#0e639c"
+  backgroundColor: "#ffffff"
+  secondaryBackgroundColor: "#f0f2f6"
+  textColor: "#31333F"
+  font: "sans serif"
+  
+  # Custom theme overrides
+  themeConfig:
+    base: "light"
+    colors:
+      primary: "#0e639c"
+      secondary: "#ff4b4b"
+      background: "#ffffff"
+      text: "#31333F"
+      
+server:
+  headless: true
+  port: 8501
+  address: "0.0.0.0"
+  enableCORS: false
+  
+  # File upload settings
+  maxUploadSize: 10
+  maxMessageSize: 50
+
+runner:
+  fastReruns: true
+  magicMode: true
+  
+browser:
+  serverAddress: "localhost"
+  serverPort: 8501
+  gatherUsageStats: false
+
+uploader:
+  maxRetry: 3
+  
+# Custom navigation
+navigation:
+  defaultName: "SafetyBoundary"
+  defaultIcon: "🛡️"
+  
+# Session state defaults
+defaults:
+  uploaded_image: null
+  detection_result: null
+  thresholds:
+    safe: 0.3
+    subtle: 0.5
+    obvious: 0.7

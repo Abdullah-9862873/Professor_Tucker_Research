@@ -1,0 +1,92 @@
+project:
+  name: "SafetyBoundary"
+  version: "1.0.0"
+  description: "Subtle Safety Boundary Detection using YOLOv8"
+  author: "Abdullah Sultan"
+  research_focus: "Safety boundary violation detection in computer vision"
+
+dataset:
+  coco_path: "data/annotations"
+  train_split: 0.7
+  val_split: 0.15
+  test_split: 0.15
+  image_size: 320
+  batch_size: 4
+  max_train_samples: 300  # Using filtered images: 150 safe + 40 subtle + 150 obvious = ~340 available
+  
+safety_boundaries:
+  # Safety boundary definitions for COCO categories
+  person:
+    safety_zone: 0.5  # meters
+    boundary_type: "personal_space"
+    critical_objects: ["bicycle", "car", "motorcycle", "truck", "bus"]
+
+  bicycle:
+    safety_zone: 2.0  # meters
+    boundary_type: "collision_avoidance"
+    critical_objects: ["car", "truck", "bus", "motorcycle"]
+
+  car:
+    safety_zone: 2.0  # meters
+    boundary_type: "collision_avoidance"
+    critical_objects: ["person", "bicycle", "car"]
+
+  motorcycle:
+    safety_zone: 2.0  # meters
+    boundary_type: "collision_avoidance"
+    critical_objects: ["person", "car", "truck"]
+
+  truck:
+    safety_zone: 3.0  # meters
+    boundary_type: "heavy_vehicle"
+    critical_objects: ["person", "car", "bicycle"]
+
+  bus:
+    safety_zone: 3.0  # meters
+    boundary_type: "heavy_vehicle"
+    critical_objects: ["person", "bicycle", "car"]
+
+  train:
+    safety_zone: 5.0  # meters
+    boundary_type: "rail_safety"
+    critical_objects: ["person"]
+
+  traffic light:
+    safety_zone: 0.0  # informational only
+    boundary_type: "signal"
+    critical_objects: ["car", "truck", "bus"]
+
+model:
+  base_model: "yolov8n.pt"  # nano - fastest model
+  input_size: [320, 320]
+  confidence_threshold: 0.5
+  iou_threshold: 0.45
+  num_classes: 80  # COCO classes
+  
+safety_detection:
+  # Parameters for subtle vs obvious failure detection
+  subtle_failure_threshold: 0.3  # Proximity to boundary
+  obvious_failure_threshold: 0.8  # Clear boundary violation
+  temporal_window: 5  # frames for temporal analysis
+  attention_regions: ["objects", "boundaries", "interactions"]
+  
+training:
+  epochs: 20
+  learning_rate: 0.0005
+  weight_decay: 0.0001
+  momentum: 0.937
+  warmup_epochs: 2
+  device: "cpu"
+  seed: 42
+  early_stopping_patience: 5
+  
+evaluation:
+  metrics: ["precision", "recall", "f1", "boundary_accuracy"]
+  cross_validation: true
+  test_scenarios: ["industrial", "traffic", "pedestrian"]
+  
+visualization:
+  show_confidence_maps: true
+  show_boundary_zones: true
+  show_failure_heatmaps: true
+  temporal_analysis: true
