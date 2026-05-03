@@ -8,17 +8,17 @@
 
 This project began with a simple question from reading Professor Tucker Hermans' **Fail2Progress** paper: *If robots can learn from their failures using targeted data generation, can a vision system do the same for safety boundary detection?*
 
-The answer turned out to be yes — but the road getting there was full of instructive failures.
+The answer turned out to be yes, but the road getting there was full of instructive failures.
 
 ### Phase 1: The YOLOv8 Baseline (What Went Wrong)
 
-We started by building a **Streamlit web application** powered by a **YOLOv8 object detection model**. The idea was straightforward: use YOLOv8 to scan images and classify them into three safety categories:
+I started by building a **Streamlit web application** powered by a **YOLOv8 object detection model**. The idea was straightforward: use YOLOv8 to scan images and classify them into three safety categories:
 
 - **Safe** — calm, everyday scenes (people, furniture, food)
 - **Subtle** — potentially concerning objects (backpacks, suitcases, sports equipment)
 - **Obvious** — clearly dangerous indicators (skateboards near roads, surfboards, frisbees in crowded areas)
 
-We ran YOLOv8 across roughly **5,000 COCO val2017 images** and it autonomously selected **441 samples** — 100 Safe, 192 Subtle, and 149 Obvious. The model used raw object detection confidence scores and category mappings to assign these safety labels.
+I ran YOLOv8 across roughly **5,000 COCO val2017 images** and it autonomously selected **441 samples** — 100 Safe, 192 Subtle, and 149 Obvious. The model used raw object detection confidence scores and category mappings to assign these safety labels.
 
 The results were *poor*:
 
@@ -35,7 +35,7 @@ This is exactly the problem Fail2Progress identifies: **when a system fails, sim
 
 ### Phase 2: The Autonomous Classifier (Finding Failure Modes)
 
-Rather than manually curating data, we built an **autonomous classifier** that:
+Rather than manually curating data, I built an **autonomous classifier** that:
 
 1. Processed all **5,000+ COCO val2017 images** through YOLOv8
 2. Identified where the YOLOv8 model performed poorly
@@ -104,7 +104,7 @@ The baseline model clearly shows the problem — the 24.44% accuracy gap between
 
 > **Note**: The 5-fold cross-validation trains *new* models from scratch on each fold with reduced epochs (5 epochs vs. 20 for the full pipeline), which explains the lower mean compared to the fully-trained improved model. The important point is that the model consistently outperforms both random guessing and majority-class baselines across all folds.
 
-### The Connection to Fail2Progress
+### How Fail2Progress Research Helped
 
 The entire arc of this project follows the Fail2Progress framework:
 
@@ -115,22 +115,6 @@ The entire arc of this project follows the Fail2Progress framework:
 5. **Significant improvement** — Overall accuracy went from 46.67% to 77.78%, with the biggest gains in the hardest categories
 
 The gap between Subtle (66.67%) and Obvious (91.11%) detection is itself instructive — it mirrors the Fail2Progress observation that **low-dimensional representations struggle with near-miss failures**. The model can learn "this is obviously dangerous" because obvious violations have distinctive visual features. But subtle violations — where an object is *almost* harmless — require richer feature representations to distinguish from safe cases.
-
----
-
-## Visual Results
-
-### Baseline Model Confusion Matrix
-![Baseline Confusion Matrix](Notebooks/images-we-got/Baseline%20Model%20Confusion%20Matrix.png)
-*Baseline model confusion matrix showing how the model classifies Safe, Subtle, and Obvious images. Note the scattered predictions for Subtle and Obvious.*
-
-### Baseline vs Improved Model Comparison
-![Baseline vs Improved](Notebooks/images-we-got/Baseline%20Model%20vs%20Improved%20Model.png)
-*Side-by-side comparison of confusion matrices: Baseline (left) vs Improved model (right). Notice the improved model shows much better detection of Subtle and Obvious categories.*
-
-### Per-Class Accuracy Improvement
-![Accuracy Comparison](Notebooks/images-we-got/Pre-Class%20Accuracy%20Comparison%20and%20Improvement%20by%20Class.png)
-*Per-class accuracy comparison showing improvement across Subtle (+10.00%) and Obvious (+55.56%) categories after class-weighted fine-tuning.*
 
 ---
 
